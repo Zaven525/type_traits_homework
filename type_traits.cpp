@@ -39,7 +39,23 @@ namespace my_traits {
     struct is_pointer<const T*> : std::false_type {};
 
     template <typename T>
-    struct remove_const { using value = T; };
+    struct remove_const { using type = T; };
+    template <typename T>
+    struct remove_const<const T> { using type = T; };
+
+    template <typename T>
+    struct add_const { using type = const T; };
+    
+    template <typename T, typename U>
+    struct is_same : std::false_type {};
+    template <typename T>
+    struct is_same<T, T> : std::true_type {};
+
+    template <bool B, typename T, typename F>
+    struct Conditional { using type = T; };
+    template <typename T, typename F>
+    struct Conditional<false, T, F> { using type = F; };
+
     
 }
 
